@@ -1,20 +1,35 @@
 import { useState } from 'react';
+import TrainList from '../components/TrainList';
 
 export default function LinesPage() {
-    // initialize some currColor state
+    const [currColor, setCurrColor] = useState('gold');
+    const lineColors = ['gold', 'red', 'green', 'blue'];
   
     return (
       <div>
-        // YOUR JSX CODE
-        // start with gold as default
-        const [currColor, setCurrColor] = useState('gold');
-
         <h1>MARTA Train Tracker</h1>
-        <p>Currently showing the <strong>{currColor.toUpperCase()}</strong> line.</p>
 
-        <NavBar color={currColor} data={stationData} />
-        <TrainList color={currColor} data={trainData} />
-        // YOUR JSX CODE
+        <div>
+            <p>Select a line:</p>
+            {lineColors.map(color => (
+                <button
+                    key={color}
+                    onClick={() => setCurrColor(color)}
+                    style={{
+                        backgroundColor: currColor === color ? color : 'grey',
+                        color: 'white',
+                        margin: '5px',
+                        border: '1px solid black'
+                    }}
+                >
+                    {color.toUpperCase()}
+                </button>
+            ))}
+        </div>
+
+        <hr />
+        {/* <NavBar color={currColor} data={stationData} /> */}
+        <TrainList color={currColor} /> {/* data={trainData} /> */}
       </div>
     );
 }
