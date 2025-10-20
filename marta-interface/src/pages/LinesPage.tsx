@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import TrainList from '../components/TrainList';
+import NavBar from '../components/Navbar';
 
 export default function LinesPage() {
     const [currColor, setCurrColor] = useState('gold');
@@ -28,7 +29,7 @@ export default function LinesPage() {
         </div>
 
         <hr />
-        {/* <NavBar color={currColor} data={stationData} /> */}
+        <NavBar color={currColor} /> {/* data={stationData} /> */}
         <TrainList color={currColor} /> {/* data={trainData} /> */}
       </div>
     );

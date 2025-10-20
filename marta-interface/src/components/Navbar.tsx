@@ -1,15 +1,10 @@
 import { useState, useEffect } from 'react';
 
-interface NavbarProps {
+interface NavBarProps {
     color: string;
 }
 
-interface Station {
-    STATION: string;
-}
-
-
-export default function Navbar({ color }: NavbarProps) {
+export default function NavBar({ color }: NavBarProps) {
     const [stations, setStations] = useState<Station[]>([]);
     const [isLoading, setIsLoading] = useState(true);
   
@@ -20,6 +15,7 @@ export default function Navbar({ color }: NavbarProps) {
       fetch(apiUrl)
       .then(res => res.json())
       .then(data => {
+        console.log("Fetched station data:", data); // debugging
         setStations(data);
         setIsLoading(false);
       })
@@ -38,8 +34,18 @@ export default function Navbar({ color }: NavbarProps) {
       <h4>Stations</h4>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
         {stations.map(station => (
-          <button key={station.STATION}>
-            {station.STATION}
+            <button key={station}
+                style={{
+                    backgroundColor: '#4a4a4a',
+                    color: 'white',        
+                    border: 'none',           
+                    borderRadius: '15px',
+                    padding: '8px 16px',
+                    cursor: 'pointer',
+                    fontSize: '14px'
+                }}
+            >
+            {station}
           </button>
         ))}
       </div>
