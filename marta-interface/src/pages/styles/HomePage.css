@@ -1,0 +1,59 @@
+.home-container {
+    background-color: #282c34;
+    color: white;
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid #444;
+}
+
+.home-logo {
+    height: 25px;
+}
+
+.home-nav-link {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.home-main {
+    display: flex;
+    padding: 50px;
+    gap: 50px;
+}
+
+.routes-section {
+    flex: 1;
+}
+
+.routes-section h2 {
+    font-family: 'Arial Narrow', sans-serif;
+    font-stretch: ultra-condensed;
+    font-size: 28px;
+    margin-bottom: 40px;
+}
+
+.route-link {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    padding: 15px 0;
+    border-bottom: 1px solid #444;
+}
+
+.image-section {
+    flex: 2;
+}
+
+.image-section img {
+    width: 100%;
+    border-radius: 10px;
+}
