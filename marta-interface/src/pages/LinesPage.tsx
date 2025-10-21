@@ -4,6 +4,7 @@ import NavBar from '../components/Navbar';
 
 export default function LinesPage() {
     const [currColor, setCurrColor] = useState('gold');
+    const [selectedStation, setSelectedStation] = useState<string | null>(null);
     const lineColors = ['gold', 'red', 'green', 'blue'];
   
     return (
@@ -15,7 +16,10 @@ export default function LinesPage() {
             {lineColors.map(color => (
                 <button
                     key={color}
-                    onClick={() => setCurrColor(color)}
+                    onClick={() => {
+                        setCurrColor(color);
+                        setSelectedStation(null);
+                    }}
                     style={{
                         backgroundColor: currColor === color ? color : 'grey',
                         color: 'white',

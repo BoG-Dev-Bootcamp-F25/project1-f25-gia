@@ -31,7 +31,15 @@ export default function NavBar({ color }: NavBarProps) {
 
   return (
     <nav style={{ padding: '10px', backgroundColor: '#eee', border: '1px solid #ccc', marginBottom: '10px' }}>
-      <h4>Stations</h4>
+      <h4
+        style={{
+            color: '#333',
+            fontSize: '20px',
+            textAlign: 'center',
+            textTransform: 'uppercase',
+            margin: '0 0 10px 0'
+        }}
+      >Stations</h4>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
         {stations.map(station => (
             <button key={station}
