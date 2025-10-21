@@ -55,8 +55,11 @@ export default function TrainList({ color, selectedStation, activeFilters }: Tra
             if (!train.STATION) return false;
             
             const cleanedApiStationName = train.STATION.replace(" STATION", "").toUpperCase();
-            
-            return selectedStation.toUpperCase().includes(cleanedApiStationName);
+            const selectedStationName = selectedStation.trim().toUpperCase();
+
+            // more testing agh
+            console.log(`Comparing: API='${cleanedApiStationName}' vs Button='${selectedStationName}'`);
+            return cleanedApiStationName.startsWith(selectedStationName) || selectedStationName.includes(cleanedApiStationName);
         })
         .filter(train => { // direction
             const directionFilters = activeFilters.filter(f => ['N', 'S', 'E', 'W'].includes(f));
