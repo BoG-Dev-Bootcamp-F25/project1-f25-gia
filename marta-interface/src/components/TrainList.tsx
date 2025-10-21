@@ -7,15 +7,17 @@ interface TrainData { // might be lowercase 'T'
     DESTINATION: string;
     DIRECTION: string;
     LINE: string;
+    STATION: string;
     WAITING_TIME: string;
     DELAY: string;
 }
 
 interface TrainListProps {
     color: string;
+    selectedStation: string | null;
 }
 
-export default function TrainList({ color }: TrainListProps) {
+export default function TrainList({ color, selectedStation }: TrainListProps) {
     const [trains, setTrains] = useState<TrainData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -25,16 +27,39 @@ export default function TrainList({ color }: TrainListProps) {
         const apiUrl = `https://midsem-bootcamp-api.onrender.com/arrivals/${color}`;
 
         fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            setTrains(data);
-            setIsLoading(false); // retrieved the data
+            .then(response => response.json())
+            .then(data => {
+                const uniqueTrainsMap = new Map();
+                data.forEach((train: TrainData) => {
+                uniqueTrainsMap.set(train.TRAIN_ID, train);
+                });
+                const uniqueTrainsArray = Array.from(uniqueTrainsMap.values());
+                setTrains(uniqueTrainsArray);
+                
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.error("Failed to fetch train data:", error);
+                setIsLoading(false);
+            });
+    }, [color]);
+
+    // for testing
+    console.log("Filtering for station:", selectedStation);
+
+    const filteredTrains = selectedStation ? trains.filter(train => {
+        if (!train.STATION) {
+            return false;
+        }
+
+        // standardizing cases (uppercase)
+        const trainStationFirstWord = train.STATION.split(' ')[0].toUpperCase();
+        const selectedStationFirstWord = selectedStation.split(' ')[0].toUpperCase();
+
+        // check first word only
+        return trainStationFirstWord === selectedStationFirstWord;
         })
-        .catch(error => {
-            console.error("Failed to fetch train data:", error);
-            setIsLoading(false); // stop loading when error
-        });
-    }, [color]); 
+    : trains;
 
     if (isLoading) {
         return <p>Loading train data...</p>;
@@ -42,13 +67,18 @@ export default function TrainList({ color }: TrainListProps) {
     
     return (
         <div>
-        <h3>Trains for {color.charAt(0).toUpperCase() + color.slice(1)} Line</h3>
-        {trains.map(train => (
-            <Train 
-            key={train.TRAIN_ID}
-            {...train}
-            />
-        ))}
-    </div>
-  );
+            <h3>Trains for {color.charAt(0).toUpperCase() + color.slice(1)} Line</h3>
+            {filteredTrains.length === 0 && !isLoading && (
+                <p>No current trains match.</p>
+            )}
+
+            {filteredTrains.map(train => (
+                <Train 
+                key={train.TRAIN_ID}
+                {...train}
+                />
+            ))}
+        </div>
+    );
 }
+

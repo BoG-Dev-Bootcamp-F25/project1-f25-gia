@@ -38,7 +38,10 @@ export default function LinesPage() {
             selectedStation={selectedStation}
             onStationSelect={setSelectedStation}
         />
-        <TrainList color={currColor} />
+        <TrainList 
+            color={currColor} 
+            selectedStation={selectedStation} 
+        />
       </div>
     );
 }
