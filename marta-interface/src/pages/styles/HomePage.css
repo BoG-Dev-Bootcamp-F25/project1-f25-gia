@@ -1,0 +1,85 @@
+.home-container {
+    background-color: #282c34;
+    color: white;
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+
+.home-header {
+    display: flex; /* This remains the same */
+    align-items: center;
+    padding: 14px 40px;
+    padding-top: 23px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #444;
+    /* justify-content: space-between; */
+}
+  
+.header-left,
+.header-center,
+.header-right {
+    flex: 1;
+}
+
+.header-center {
+    text-align: center;
+}
+
+.header-right {
+    text-align: right;
+}
+
+.home-logo {
+    height: 36px;
+    padding-top: 5px;
+}
+
+.home-nav-link {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.home-main {
+    display: flex;
+    padding: 40px;
+    /* padding-left: 60px;
+    padding-right: 60px; */
+    gap: 50px;
+}
+
+.routes-section {
+    flex: 1;
+    text-align: left;
+}
+
+.routes-section h2 {
+    font-family: 'Impact', fantasy;
+    font-size: 48px;
+    margin-bottom: 40px;
+}
+
+.route-link {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    padding: 15px 0;
+    border-bottom: 1px solid #444;
+}
+
+.image-section {
+    flex: 2;
+    padding-top: 65px;
+}
+
+.image-section img {
+    width: 100%;
+    min-height: 350px;
+    max-height: 450px;
+    max-width: 920px;
+    border-radius: 10px;
+
+    object-fit: cover;
+    object-position: left center;
+}

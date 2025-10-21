@@ -53,7 +53,10 @@ export default function TrainList({ color, selectedStation, activeFilters }: Tra
         .filter(train => { // station
             if (!selectedStation) return true;
             if (!train.STATION) return false;
-            return train.STATION.toUpperCase().includes(selectedStation.toUpperCase());
+            
+            const cleanedApiStationName = train.STATION.replace(" STATION", "").toUpperCase();
+            
+            return selectedStation.toUpperCase().includes(cleanedApiStationName);
         })
         .filter(train => { // direction
             const directionFilters = activeFilters.filter(f => ['N', 'S', 'E', 'W'].includes(f));
@@ -63,15 +66,18 @@ export default function TrainList({ color, selectedStation, activeFilters }: Tra
         .filter(train => { // arrive/schedule
             const isArrivingActive = activeFilters.includes('ARRIVING');
             const isScheduledActive = activeFilters.includes('SCHEDULED');
-    
+
             if (!isArrivingActive && !isScheduledActive) return true;
-    
+
             if (!train.WAITING_TIME) return false;
             const waitingTime = train.WAITING_TIME.toUpperCase();
-            const isTrainArriving = waitingTime === 'ARRIVING' || waitingTime === 'BOARDING';
-    
-            if (isArrivingActive) return isTrainArriving;
-            if (isScheduledActive) return !isTrainArriving;
+
+            if (isArrivingActive) {
+                return waitingTime === 'ARRIVING' || waitingTime === 'BOARDING';
+            }
+            if (isScheduledActive) {
+                return waitingTime.includes('MIN');
+            }
             
             return true;
         });
@@ -82,7 +88,7 @@ export default function TrainList({ color, selectedStation, activeFilters }: Tra
     
     return (
         <div>
-            <h3>Trains for {color.charAt(0).toUpperCase() + color.slice(1)} Line</h3>
+            {/* <h3>Trains for {color.charAt(0).toUpperCase() + color.slice(1)} Line</h3> */}
             {filteredTrains.length === 0 && !isLoading && (
                 <p>No current trains match</p>
             )}

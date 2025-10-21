@@ -17,23 +17,84 @@
     padding: 20px;
 }
 
-.line-buttons button {
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
-    margin: 0 5px;
-    border: 2px solid #555;
-    background-color: transparent;
+    background-color: #1e2228;
+    border-bottom: 1px solid #444;
+}
+
+.header-line-buttons button {
+    /* font-family: 'Impact', fantasy;
+    font-stretch: ultra-condensed; */
+    padding: 8px 25px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
     color: white;
-    cursor: pointer;
     font-weight: bold;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+  
+.header-line-buttons button:hover {
+    opacity: 1;
 }
 
-/* src/pages/LinesPage.css */
-
-.filter-buttons {
-    margin-bottom: 20px;
+.header-line-buttons button.active {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-.filter-buttons button {
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    color: white;
+}
+
+.header-logo {
+    height: 30px;
+}
+
+.sub-header {
+    /* padding-bottom: 20px; */
+    padding-top: 25px;
+    text-align: center;
+    background-color: #282c34;
+    border-bottom: 1px solid #444;
+}
+
+.sub-header h1 {
+    /* padding-top: 5px; */
+    padding-bottom: 5px;
+    margin: 0;
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+.filter-bar {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.filter-bar button {
     padding: 8px 15px;
     margin-right: 10px;
     border: 1px solid #555;
@@ -43,7 +104,16 @@
     cursor: pointer;
 }
 
-.filter-buttons button.active {
+.filter-bar button.active {
     background-color: #007bff;
     border-color: #007bff;
+}
+
+.line-title-accent {
+    height: 4px;
+    /* width: 80px; */
+    /* margin: 0 auto 15px; */
+    margin-top: 15px;
+    /* margin-bottom: 15px; */
+    border-radius: 2px;
 }
