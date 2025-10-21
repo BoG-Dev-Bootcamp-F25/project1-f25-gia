@@ -10,6 +10,7 @@
     align-items: center;
     padding: 14px 40px;
     padding-top: 23px;
+    padding-bottom: 20px;
     border-bottom: 1px solid #444;
     /* justify-content: space-between; */
 }
@@ -30,6 +31,7 @@
 
 .home-logo {
     height: 36px;
+    padding-top: 5px;
 }
 
 .home-nav-link {
@@ -48,6 +50,7 @@
 
 .routes-section {
     flex: 1;
+    text-align: left;
 }
 
 .routes-section h2 {
