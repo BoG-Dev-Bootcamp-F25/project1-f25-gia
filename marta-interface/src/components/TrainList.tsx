@@ -53,7 +53,10 @@ export default function TrainList({ color, selectedStation, activeFilters }: Tra
         .filter(train => { // station
             if (!selectedStation) return true;
             if (!train.STATION) return false;
-            return train.STATION.toUpperCase().includes(selectedStation.toUpperCase());
+            
+            const cleanedApiStationName = train.STATION.replace(" STATION", "").toUpperCase();
+            
+            return selectedStation.toUpperCase().includes(cleanedApiStationName);
         })
         .filter(train => { // direction
             const directionFilters = activeFilters.filter(f => ['N', 'S', 'E', 'W'].includes(f));

@@ -1,14 +1,24 @@
 import { Link } from 'react-router-dom';
 import './styles/HomePage.css';
-import train from './styles/Train.jpg';
+import train from './styles/Train.png';
 import martaLogo from './styles/MartaNameLogo.png';
 
 export default function HomePage() {
   return (
     <div className="home-container">
       <header className="home-header">
-        <img src={martaLogo} alt="MARTA Logo" className="home-logo" />
-        <Link to="/about" className="home-nav-link">About MARTA</Link>
+        {/* empty left */}
+        <div className="header-left"></div>
+
+        {/* center */}
+        <div className="header-center">
+          <img src={martaLogo} alt="MARTA Logo" className="home-logo" />
+        </div>
+
+        {/* right */}
+        <div className="header-right">
+          <Link to="/about" className="home-nav-link">About MARTA</Link>
+        </div>
       </header>
 
       <main className="home-main">
