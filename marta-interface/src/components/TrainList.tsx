@@ -48,17 +48,12 @@ export default function TrainList({ color, selectedStation }: TrainListProps) {
     console.log("Filtering for station:", selectedStation);
 
     const filteredTrains = selectedStation ? trains.filter(train => {
-        if (!train.STATION) {
+        if (!train.DESTINATION) {
             return false;
         }
 
-        // standardizing cases (uppercase)
-        const trainStationFirstWord = train.STATION.split(' ')[0].toUpperCase();
-        const selectedStationFirstWord = selectedStation.split(' ')[0].toUpperCase();
-
-        // check first word only
-        return trainStationFirstWord === selectedStationFirstWord;
-        })
+        return selectedStation.toUpperCase().includes(train.DESTINATION.toUpperCase());
+    })
     : trains;
 
     if (isLoading) {

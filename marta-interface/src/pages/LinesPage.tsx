@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TrainList from '../components/TrainList';
-import NavBar from '../components/Navbar';
+import NavBar from '../components/NavBar';
+import './styles/LinesPage.css';
 
 export default function LinesPage() {
     const [currColor, setCurrColor] = useState('gold');
@@ -8,40 +9,39 @@ export default function LinesPage() {
     const lineColors = ['gold', 'red', 'green', 'blue'];
   
     return (
-      <div>
-        <h1>MARTA Train Tracker</h1>
-
-        <div>
-            <p>Select a line:</p>
-            {lineColors.map(color => (
-                <button
-                    key={color}
-                    onClick={() => {
-                        setCurrColor(color);
-                        setSelectedStation(null);
-                    }}
-                    style={{
-                        backgroundColor: currColor === color ? color : 'grey',
-                        color: 'white',
-                        margin: '5px',
-                        border: '1px solid black'
-                    }}
+        <div className="tracker-container">
+          
+          {/* left sidebar */}
+          <div className="sidebar">
+            <NavBar 
+              color={currColor} 
+              selectedStation={selectedStation}
+              onStationSelect={setSelectedStation}
+            />
+          </div>
+    
+          {/* right column */}
+          <div className="main-content">
+            <div className="line-buttons">
+              {lineColors.map(color => (
+                <button 
+                  key={color}
+                  onClick={() => {
+                    setCurrColor(color);
+                    setSelectedStation(null); 
+                  }}
+                  style={{ borderColor: currColor === color ? color : '#555' }}
                 >
-                    {color.toUpperCase()}
+                  {color.toUpperCase()}
                 </button>
-            ))}
+              ))}
+            </div>
+            
+            <TrainList 
+              color={currColor} 
+              selectedStation={selectedStation} 
+            />
+          </div>
         </div>
-
-        <hr />
-        <NavBar 
-            color={currColor}
-            selectedStation={selectedStation}
-            onStationSelect={setSelectedStation}
-        />
-        <TrainList 
-            color={currColor} 
-            selectedStation={selectedStation} 
-        />
-      </div>
-    );
+      );
 }
