@@ -64,13 +64,13 @@ export default function TrainList({ color, selectedStation }: TrainListProps) {
         <div>
             <h3>Trains for {color.charAt(0).toUpperCase() + color.slice(1)} Line</h3>
             {filteredTrains.length === 0 && !isLoading && (
-                <p>No current trains match.</p>
+                <p>No current trains match</p>
             )}
 
             {filteredTrains.map(train => (
                 <Train 
-                key={train.TRAIN_ID}
-                {...train}
+                    key={train.TRAIN_ID}
+                    {...train}
                 />
             ))}
         </div>

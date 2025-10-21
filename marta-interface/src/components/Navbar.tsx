@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './NavBar.css';
+import './styles/NavBar.css';
 
 interface NavBarProps {
     color: string;
@@ -8,66 +8,39 @@ interface NavBarProps {
 }
 
 export default function NavBar({ color, selectedStation, onStationSelect }: NavBarProps) {
-    const [stations, setStations] = useState<string[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-  
-    useEffect(() => {
-      setIsLoading(true);
-      const apiUrl = `https://midsem-bootcamp-api.onrender.com/stations/${color}`;
+    // placeholder
+    const stationsByLine: { [key: string]: string[] } = {
+        gold: ["Doraville", "Chamblee", "Brookhaven", "Lenox", "Lindbergh Center", "Arts Center", "Midtown", "North Avenue", "Civic Center", "Peachtree Center", "Five Points", "Garnett", "West End", "Oakland City", "Lakewood/Ft. McPherson", "East Point", "College Park", "Airport"],
+        red: ["North Springs", "Sandy Springs", "Dunwoody", "Medical Center", "Buckhead", "Lindbergh Center", "Arts Center", "Midtown", "North Avenue", "Civic Center", "Peachtree Center", "Five Points", "Garnett", "West End", "Oakland City", "Lakewood/Ft. McPherson", "East Point", "College Park", "Airport"],
+        blue: ["Hamilton E. Holmes", "West Lake", "Ashby", "Vine City", "GWCC/CNN Center", "Five Points", "Georgia State", "King Memorial", "Inman Park", "Edgewood", "East Lake", "Decatur", "Avondale", "Kensington", "Indian Creek"],
+        green: ["Bankhead", "Ashby", "Vine City", "GWCC/CNN Center", "Five Points", "Georgia State", "King Memorial", "Inman Park", "Edgewood", "Candler Park", "East Lake", "Decatur", "Avondale", "Kensington", "Indian Creek"]
+    };
+    
+    const stations = stationsByLine[color] || [];
 
-      fetch(apiUrl)
-      .then(res => res.json())
-      .then(data => {
-        console.log("Fetched station data:", data); // debugging
-        setStations(data);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.error("Failed to fetch station data:", error);
-        setIsLoading(false);
-      });
-  }, [color]);
+    return (
+        <div className="station-sidebar">
+        <h4>Select your starting station</h4>
 
-  if (isLoading) {
-    return <p>Loading stations...</p>;
-  }
+        <div 
+            className={`station-item ${selectedStation === null ? 'active' : ''}`}
+            onClick={() => onStationSelect(null)}
+        >
+            All Stations
+        </div>
 
-  return (
-    <nav style={{ padding: '10px', backgroundColor: '#eee', border: '1px solid #ccc', marginBottom: '10px' }}>
-      <h4
-        style={{
-            color: '#333',
-            fontSize: '20px',
-            textAlign: 'center',
-            textTransform: 'uppercase',
-            margin: '0 0 10px 0'
-        }}
-      >Stations</h4>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
-      {stations.map(station => {
-          const isSelected = selectedStation === station;
-
-          return (
-            <button 
-              key={station}
-              onClick={() => {
-                onStationSelect(isSelected ? null : station);
-              }}
-              style={{
-                backgroundColor: isSelected ? '#007bff' : '#4a4a4a',
-                color: 'white',
-                border: 'none',
-                borderRadius: '15px',
-                padding: '8px 16px',
-                cursor: 'pointer',
-                fontSize: '14px'
-              }}
+        {stations.map(station => {
+            const isSelected = selectedStation === station;
+            return (
+            <div 
+                key={station}
+                className={`station-item ${isSelected ? 'active' : ''}`}
+                onClick={() => onStationSelect(station)}
             >
-            {station}
-          </button>
-          );
+                {station}
+            </div>
+            );
         })}
-      </div>
-    </nav>
-  );
+        </div>
+    );
 }
