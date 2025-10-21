@@ -33,8 +33,12 @@ export default function LinesPage() {
         </div>
 
         <hr />
-        <NavBar color={currColor} /> {/* data={stationData} /> */}
-        <TrainList color={currColor} /> {/* data={trainData} /> */}
+        <NavBar 
+            color={currColor}
+            selectedStation={selectedStation}
+            onStationSelect={setSelectedStation}
+        />
+        <TrainList color={currColor} />
       </div>
     );
 }

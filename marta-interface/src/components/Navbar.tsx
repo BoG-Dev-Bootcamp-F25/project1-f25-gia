@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 
 interface NavBarProps {
     color: string;
+    selectedStation: string | null;
+    onStationSelect: (station: string | null) => void;
 }
 
-export default function NavBar({ color }: NavBarProps) {
-    const [stations, setStations] = useState<Station[]>([]);
+export default function NavBar({ color, selectedStation, onStationSelect }: NavBarProps) {
+    const [stations, setStations] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
   
     useEffect(() => {
@@ -41,21 +43,29 @@ export default function NavBar({ color }: NavBarProps) {
         }}
       >Stations</h4>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
-        {stations.map(station => (
-            <button key={station}
-                style={{
-                    backgroundColor: '#4a4a4a',
-                    color: 'white',        
-                    border: 'none',           
-                    borderRadius: '15px',
-                    padding: '8px 16px',
-                    cursor: 'pointer',
-                    fontSize: '14px'
-                }}
+      {stations.map(station => {
+          const isSelected = selectedStation === station;
+
+          return (
+            <button 
+              key={station}
+              onClick={() => {
+                onStationSelect(isSelected ? null : station);
+              }}
+              style={{
+                backgroundColor: isSelected ? '#007bff' : '#4a4a4a',
+                color: 'white',
+                border: 'none',
+                borderRadius: '15px',
+                padding: '8px 16px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
             >
             {station}
           </button>
-        ))}
+          );
+        })}
       </div>
     </nav>
   );
