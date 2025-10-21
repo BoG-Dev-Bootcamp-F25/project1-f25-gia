@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TrainList from '../components/TrainList';
 import NavBar from '../components/NavBar';
+import martaNameLogo from './styles/MartaNameLogo.png';
 import './styles/LinesPage.css';
 
 export default function LinesPage() {
@@ -36,9 +37,52 @@ export default function LinesPage() {
     const isNorthSouth = currColor === 'red' || currColor === 'gold';
   
     return (
+      <div className="page-container">
+        
+        {/* top top header */}
+        <header className="main-header">
+          <div className="header-line-buttons">
+            {lineColors.map(color => (
+              <button 
+                key={color}
+                onClick={() => {
+                  setCurrColor(color);
+                  setSelectedStation(null); 
+                }}
+                className={currColor === color ? 'active' : ''}
+                style={{ backgroundColor: color }}
+              >
+                {color.toUpperCase()}
+              </button>
+            ))}
+          </div>
+          <div className="header-nav">
+            <button className="nav-button">Home</button>
+            <button className="nav-button">About</button>
+            <img src={martaNameLogo} alt="MARTA Logo" className="header-logo" />
+          </div>
+        </header>
+  
+        {/* line name header */}
+        <div className="sub-header">
+          {/* <div
+            className="line-title-accent"
+            style={{ backgroundColor: currColor }}
+          ></div> */}
+          <h1 style={{ 
+            fontFamily: "'Impact', fantasy",
+            // fontStretch: 'ultra-condensed' 
+            }}>
+            {currColor.toUpperCase()}
+          </h1>
+          <div
+            className="line-title-accent"
+            style={{ backgroundColor: currColor }}
+          ></div>
+        </div>
+  
+        {/* main content */}
         <div className="tracker-container">
-          
-          {/* left sidebar */}
           <div className="sidebar">
             <NavBar 
               color={currColor} 
@@ -46,46 +90,32 @@ export default function LinesPage() {
               onStationSelect={setSelectedStation}
             />
           </div>
-    
-          {/* right column */}
           <div className="main-content">
-            <div className="line-buttons">
-              {lineColors.map(color => (
-                <button 
-                  key={color}
-                  onClick={() => {
-                    setCurrColor(color);
-                    setSelectedStation(null); 
-                  }}
-                  style={{ borderColor: currColor === color ? color : '#555' }}
-                >
-                  {color.toUpperCase()}
-                </button>
-              ))}
-            </div>
-
-            <div className="filter-buttons">
-                <button onClick={() => handleFilterClick('ARRIVING')} className={activeFilters.includes('ARRIVING') ? 'active' : ''}>Arriving</button>
-                <button onClick={() => handleFilterClick('SCHEDULED')} className={activeFilters.includes('SCHEDULED') ? 'active' : ''}>Scheduled</button>
-
-                {isNorthSouth ? (
-                    <>
-                    <button onClick={() => handleFilterClick('N')} className={activeFilters.includes('N') ? 'active' : ''}>Northbound</button>
-                    <button onClick={() => handleFilterClick('S')} className={activeFilters.includes('S') ? 'active' : ''}>Southbound</button>
-                    </>
-                ) : (
-                    <>
-                    <button onClick={() => handleFilterClick('E')} className={activeFilters.includes('E') ? 'active' : ''}>Eastbound</button>
-                    <button onClick={() => handleFilterClick('W')} className={activeFilters.includes('W') ? 'active' : ''}>Westbound</button>
-                    </>
-                )}
+            {/* filter header */}
+            <div className="filter-bar">
+              <button onClick={() => handleFilterClick('ARRIVING')} className={activeFilters.includes('ARRIVING') ? 'active' : ''}>Arriving</button>
+              <button onClick={() => handleFilterClick('SCHEDULED')} className={activeFilters.includes('SCHEDULED') ? 'active' : ''}>Scheduled</button>
+              
+              {isNorthSouth ? (
+                <>
+                  <button onClick={() => handleFilterClick('N')} className={activeFilters.includes('N') ? 'active' : ''}>Northbound</button>
+                  <button onClick={() => handleFilterClick('S')} className={activeFilters.includes('S') ? 'active' : ''}>Southbound</button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => handleFilterClick('E')} className={activeFilters.includes('E') ? 'active' : ''}>Eastbound</button>
+                  <button onClick={() => handleFilterClick('W')} className={activeFilters.includes('W') ? 'active' : ''}>Westbound</button>
+                </>
+              )}
             </div>
             
             <TrainList 
               color={currColor} 
-              selectedStation={selectedStation} 
+              selectedStation={selectedStation}
+              activeFilters={activeFilters}
             />
           </div>
         </div>
-      );
+      </div>
+    );
 }
