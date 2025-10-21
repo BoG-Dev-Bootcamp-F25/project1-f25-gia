@@ -10,14 +10,16 @@ interface TrainData { // might be lowercase 'T'
     STATION: string;
     WAITING_TIME: string;
     DELAY: string;
+    HEAD_SIGN: string;
 }
 
 interface TrainListProps {
     color: string;
     selectedStation: string | null;
+    activeFilters: string[];
 }
 
-export default function TrainList({ color, selectedStation }: TrainListProps) {
+export default function TrainList({ color, selectedStation, activeFilters }: TrainListProps) {
     const [trains, setTrains] = useState<TrainData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -47,14 +49,32 @@ export default function TrainList({ color, selectedStation }: TrainListProps) {
     // for testing
     console.log("Filtering for station:", selectedStation);
 
-    const filteredTrains = selectedStation ? trains.filter(train => {
-        if (!train.DESTINATION) {
-            return false;
-        }
-
-        return selectedStation.toUpperCase().includes(train.DESTINATION.toUpperCase());
-    })
-    : trains;
+    const filteredTrains = trains
+        .filter(train => { // station
+            if (!selectedStation) return true;
+            if (!train.STATION) return false;
+            return train.STATION.toUpperCase().includes(selectedStation.toUpperCase());
+        })
+        .filter(train => { // direction
+            const directionFilters = activeFilters.filter(f => ['N', 'S', 'E', 'W'].includes(f));
+            if (directionFilters.length === 0) return true;
+            return directionFilters.includes(train.DIRECTION);
+        })
+        .filter(train => { // arrive/schedule
+            const isArrivingActive = activeFilters.includes('ARRIVING');
+            const isScheduledActive = activeFilters.includes('SCHEDULED');
+    
+            if (!isArrivingActive && !isScheduledActive) return true;
+    
+            if (!train.WAITING_TIME) return false;
+            const waitingTime = train.WAITING_TIME.toUpperCase();
+            const isTrainArriving = waitingTime === 'ARRIVING' || waitingTime === 'BOARDING';
+    
+            if (isArrivingActive) return isTrainArriving;
+            if (isScheduledActive) return !isTrainArriving;
+            
+            return true;
+        });
 
     if (isLoading) {
         return <p>Loading train data...</p>;
@@ -76,4 +96,3 @@ export default function TrainList({ color, selectedStation }: TrainListProps) {
         </div>
     );
 }
-
